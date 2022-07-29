@@ -1,11 +1,19 @@
 package uz.sh.service;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 import uz.sh.entity.InputAmounts;
 import uz.sh.entity.OutPutAmounts;
 import uz.sh.entity.Payment;
 import uz.sh.enums.CreditType;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,5 +137,80 @@ public class BaseService {
         }
 
         return list;
+    }
+
+    public byte[] generateFile(InputAmounts inputAmounts) {
+        Document document = new Document();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+//
+            PdfPTable table = new PdfPTable(5);
+            table.setWidthPercentage(100);
+            table.setWidths(new int[]{1, 3, 3, 5, 3});
+
+            Font headFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+
+            PdfPCell cell1 = PdfPCell("Oy", headFont);
+            table.addCell(cell1);
+
+            PdfPCell cell2 = PdfPCell("Asosiy Qarzning Qoldiqi", headFont);
+            table.addCell(cell2);
+
+            PdfPCell cell3 = PdfPCell("Asosiy Qarz bo'yicha to'lov", headFont);
+            table.addCell(cell3);
+
+            PdfPCell cell4 = PdfPCell("Foizlarni to'lash", headFont);
+            table.addCell(cell4);
+
+            PdfPCell cell5 = PdfPCell("To'lovning umumiy miqdori", headFont);
+            table.addCell(cell5);
+            List<Payment> paymentList = this.getPaymentList(inputAmounts);
+            for (int i = 0; i < paymentList.size(); i++) {
+                Payment payment = paymentList.get(i);
+
+//                String orgName = organizationService.getName(payment.getOrganizationId());
+//                String compName = companyService.getName(payment.getCompanyId());
+//                int year = payment.getDateTime().getYear();
+//                int month = payment.getDateTime().getMonthValue();
+//                int day = payment.getDateTime().getDayOfMonth();
+//                String date = year + "-" + month + "-" + day;
+
+                PdfPCell(table, payment.getMonth());
+                PdfPCell(table, payment.getAsosiyQarzQoldiqi());
+                PdfPCell(table, payment.getAsosiyQarzBuyichaTolov());
+                PdfPCell(table, payment.getFoizTulovi());
+                PdfPCell(table, payment.getJamiOylikTolov());
+            }
+
+//
+            PdfWriter.getInstance(document, out);
+            document.open();
+            document.add(new Paragraph(Element.ALIGN_JUSTIFIED_ALL, "To'lov tartibi \n\n\n"));
+            document.add(table);
+            document.close();
+
+        } catch (DocumentException ex) {
+            System.out.println("ex = " + ex);
+        }
+
+        return out.toByteArray();
+    }
+
+    private static PdfPCell PdfPCell(String name, Font headFont) {
+        PdfPCell hcell;
+        hcell = new PdfPCell(new Phrase(name, headFont));
+        hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        hcell.setBackgroundColor(BaseColor.CYAN);
+        return hcell;
+    }
+
+    private static void PdfPCell(PdfPTable table, String book) {
+        PdfPCell cell;
+        cell = new PdfPCell(new Phrase(book));
+        cell.setVerticalAlignment(Element.ALIGN_CENTER);
+        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        cell.setPaddingRight(10);
+        table.addCell(cell);
     }
 }
