@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+
+
+<div class="container col-10 offset-1 mt-4">
+    <div class="row">
+        <div class="col-8 h-100">
+            <form th:action="@{/}" class="form-control" method="post">
+                <div class="input-group my-3">
+                    <p class="mx-3">Kredit turi</p>
+                    <label class="mx-3">
+                        <input th:checked="${inputAmount.getType().toString().equals('DIFFERENSIAL')}"
+                               type="radio" name="type" value="DIFFERENSIAL">
+                    </label>DIFFERENSIAL</input>
+                    <label class="mx-3">
+                        <input th:checked="${inputAmount.getType().toString().equals('ANNUTED')}"
+                               type="radio" name="type" value="ANNUTED">
+                    </label> ANNUTED</input>
+                </div>
+                <div class="input-group my-3">
+                    <label class="mx-3" for="creditAmount">Kredit summasi </label>
+                    <input min="5000000" max="400000000" placeholder="min: 5 mln; max: 400 mln"
+                           th:value="${inputAmount.getCreditAmount()}" class="form-control" type="number"
+                           name="creditAmount" id="creditAmount">
+                </div>
+                <div class="input-group my-3">
+                    <label class="mx-3" for="percentage">Foiz </label>
+                    <input min="0" max="100" th:value="${inputAmount.getPercentage()}" class="form-control"
+                           type="number"
+                           name="percentage" id="percentage">
+                </div>
+                <div class="input-group my-3">
+                    <label class="mx-3" for="months">Muddat oyda </label>
+                    <input min="6" max="48" placeholder="min: 6 oy; max: 48 oy" th:value="${inputAmount.getMonths()}"
+                           class="form-control" type="number" name="months"
+                           id="months">
+                </div>
+                <button type="submit" class="btn btn-success">Calculate</button>
+            </form>
+        </div>
+
+        <div class="col-4 main-box h-100">
+            <h3 class="text-success" th:text="${outputAmounts.getMonthlyPayment()}"></h3>
+            <h5>Oylik To'lov</h5>
+            <h3 class="text-success" th:text="${outputAmounts.getPercentage()}"></h3>
+            <h5>Foiz</h5>
+            <h3 class="text-success" th:text="${outputAmounts.getFullPercentagePayment()}"></h3>
+            <h5>To'liq Foizli To'lov</h5>
+            <h3 class="text-success" th:text="${outputAmounts.getOverAllCreditAmount()}"></h3>
+            <h5>To'liq Kredit Miqdori</h5>
+
+            <button type="button" data-toggle="modal" data-target="#myModal"
+                    class="btn btn-success">To'lov tartibi
+            </button>
+
+
+            <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">To'lovlar tartibi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Oy</th>
+                                    <th>Asosiy Qarzning Qoldiqi</th>
+                                    <th>Asosiy Qarz bo'yicha to'lov</th>
+                                    <th>Foizlarni to'lash</th>
+                                    <th>To'lovning umumiy miqdori</th>
+                                </tr>
+                                <tr th:each="payment : ${payments}">
+                                    <td th:text="${payment.getMonth()}"></td>
+                                    <td th:text="${payment.getAsosiyQarzQoldiqi()}"></td>
+                                    <td th:text="${payment.getAsosiyQarzBuyichaTolov()}"></td>
+                                    <td th:text="${payment.getFoizTulovi()}"></td>
+                                    <td th:text="${payment.getJamiOylikTolov()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
