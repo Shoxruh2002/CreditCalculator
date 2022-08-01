@@ -60,49 +60,49 @@
             <h3 class="text-success" th:text="${outputAmounts.getOverAllCreditAmount()}"></h3>
             <h5>To'liq Kredit Miqdori</h5>
 
-<!--            <button type="button" data-toggle="modal" data-target="#myModal"-->
-<!--                    class="btn btn-success">To'lov tartibi-->
-<!--            </button>-->
+            <button type="button" data-toggle="modal" data-target="#myModal"
+                    class="btn btn-success">To'lov tartibi
+            </button>
 
 
-<!--            <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"-->
-<!--                 aria-hidden="true">-->
-<!--                <div class="modal-dialog modal-lg ">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h5 class="modal-title" id="exampleModalLabel">To'lovlar tartibi</h5>-->
-<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                                <span aria-hidden="true">&times;</span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            <table class="table">-->
-<!--                                <tr>-->
-<!--                                    <th>Oy</th>-->
-<!--                                    <th>Asosiy Qarzning Qoldiqi</th>-->
-<!--                                    <th>Asosiy Qarz bo'yicha to'lov</th>-->
-<!--                                    <th>Foizlarni to'lash</th>-->
-<!--                                    <th>To'lovning umumiy miqdori</th>-->
-<!--                                </tr>-->
-<!--                                <tr th:each="payment : ${payments}">-->
-<!--                                    <td th:text="${payment.getMonth()}"></td>-->
-<!--                                    <td th:text="${payment.getAsosiyQarzQoldiqi()}"></td>-->
-<!--                                    <td th:text="${payment.getAsosiyQarzBuyichaTolov()}"></td>-->
-<!--                                    <td th:text="${payment.getFoizTulovi()}"></td>-->
-<!--                                    <td th:text="${payment.getJamiOylikTolov()}"></td>-->
-<!--                                </tr>-->
-<!--                            </table>-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--&lt;!&ndash;                            <a th:href="@{getPdf}" class="btn btn-success"  th:text="${inputAmount.getCreditAmount()}"></a>&ndash;&gt;-->
-<!--                            <form name="inputAmount" th:action="@{/getPdf}" method="post">-->
-<!--                                <input type="hidden" name="inputAmount" th:value="${inputAmount}"/>-->
-<!--                                <button type="submit" class="btn btn-success">adasd</button>-->
-<!--                            </form>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <div class="modal fade bd-example-modal-lg" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">To'lovlar tartibi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <tr>
+                                    <th>Oy</th>
+                                    <th>Asosiy Qarzning Qoldiqi</th>
+                                    <th>Asosiy Qarz bo'yicha to'lov</th>
+                                    <th>Foizlarni to'lash</th>
+                                    <th>To'lovning umumiy miqdori</th>
+                                </tr>
+                                <tr th:each="payment : ${payments}">
+                                    <td th:text="${payment.getMonth()}"></td>
+                                    <td th:text="${payment.getAsosiyQarzQoldiqi()}"></td>
+                                    <td th:text="${payment.getAsosiyQarzBuyichaTolov()}"></td>
+                                    <td th:text="${payment.getFoizTulovi()}"></td>
+                                    <td th:text="${payment.getJamiOylikTolov()}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+<!--                            <a th:href="@{getPdf}" class="btn btn-success"  th:text="${inputAmount.getCreditAmount()}"></a>-->
+                            <form name="inputAmount" th:action="@{/getPdf}" method="post">
+                                <input type="hidden" name="inputAmount" th:value="${inputAmount}"/>
+                                <button type="submit" class="btn btn-success">adasd</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
