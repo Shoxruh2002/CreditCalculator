@@ -94,10 +94,13 @@
                             </table>
                         </div>
                         <div class="modal-footer">
-<!--                            <a th:href="@{getPdf}" class="btn btn-success"  th:text="${inputAmount.getCreditAmount()}"></a>-->
+                            <!--                            <a th:href="@{getPdf}" class="btn btn-success"  th:text="${inputAmount.getCreditAmount()}"></a>-->
                             <form name="inputAmount" th:action="@{/getPdf}" method="post">
-                                <input type="hidden" name="inputAmount" th:value="${inputAmount}"/>
-                                <button type="submit" class="btn btn-success">adasd</button>
+                                <input type="hidden" name="creditAmount" th:value="${inputAmount.getCreditAmount()}"/>
+                                <input type="hidden" name="percentage" th:value="${inputAmount.getPercentage()}"/>
+                                <input type="hidden" name="months" th:value="${inputAmount.getMonths()}"/>
+                                <input type="hidden" name="type" th:value="${inputAmount.getType()}"/>
+                                <button type="submit" class="btn btn-success">Yuklab olish</button>
                             </form>
                         </div>
                     </div>
